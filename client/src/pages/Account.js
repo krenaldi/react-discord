@@ -11,19 +11,19 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { getAccount, updateAccount } from "api/handler/account";
-import { logout } from "api/handler/auth";
+import { getAccount, updateAccount } from "../api/handler/account";
+import { logout } from "../api/handler/auth";
 import { Form, Formik } from "formik";
 import React, { useRef, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
-import userStore from "stores/userStore";
-import { aKey } from "utils/querykeys";
-import toErrorMap from "utils/toErrorMap";
-import ChangePasswordModal from "components/modals/ChangePasswordModal";
-import CropImageModal from "components/modals/CropImageModal";
-import InputField from "components/shared/InputField";
-import { UserSchema } from "validation/auth.schema";
+import userStore from "../stores/userStore";
+import { aKey } from "../utils/querykeys";
+import toErrorMap from "../utils/toErrorMap";
+import ChangePasswordModal from "../components/modals/ChangePasswordModal";
+import CropImageModal from "../components/modals/CropImageModal";
+import InputField from "../components/shared/InputField";
+import { UserSchema } from "../validation/auth.schema";
 
 export default function Account() {
   const history = useHistory();

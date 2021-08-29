@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   Box,
   Button,
@@ -9,11 +10,11 @@ import {
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { Link as RLink, useHistory } from "react-router-dom";
-import InputField from "components/shared/InputField";
-import { register } from "api/handler/auth";
-import userStore from "stores/userStore";
-import toErrorMap from "utils/toErrorMap";
-import { RegisterSchema } from "validation/auth.schema";
+import InputField from "../components/shared/InputField";
+import { register } from "../api/handler/auth";
+import userStore from "../stores/userStore";
+import toErrorMap from "../utils/toErrorMap";
+import { RegisterSchema } from "../validation/auth.schema";
 
 export default function Register() {
   return (

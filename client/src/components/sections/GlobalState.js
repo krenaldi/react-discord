@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import userStore from "stores/userStore";
-import getSocket from "api/getSocket";
-import homeStore from "stores/homeStore";
+import userStore from "../../stores/userStore";
+import getSocket from "../../api/getSocket";
+import homeStore from "../../stores/homeStore";
 
 export default function GlobalState({ children }) {
   const current = userStore((state) => state.current);
@@ -22,7 +22,7 @@ export default function GlobalState({ children }) {
 
       const socket = getSocket();
       socket.emit("toggleOnline");
-      socket.emit("joinUser", current?.id);
+      socket.emit("joinUser", current.id);
 
       socket.on("push_to_top", () => {
         incrementNotification();
@@ -38,5 +38,5 @@ export default function GlobalState({ children }) {
     }
   }, [current, inc]);
 
-  return <>{children}</>;
+  return <div>{children}</div>;
 }

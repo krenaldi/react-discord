@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link as RLink, useHistory, useParams } from "react-router-dom";
 import { Box, Flex, Image, Link, Text } from "@chakra-ui/react";
-import { joinGuild } from "api/handler/guilds";
-import { gKey } from "utils/querykeys";
+import { joinGuild } from "../api/handler/guilds";
+import { gKey } from "../utils/querykeys";
 import { useQueryClient } from "react-query";
 
 export default function Invite() {

@@ -7,14 +7,14 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
-import { resetPassword } from "api/handler/auth";
+import { resetPassword } from "../api/handler/auth";
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { Link as RLink, useHistory, useParams } from "react-router-dom";
-import userStore from "stores/userStore";
-import toErrorMap from "utils/toErrorMap";
-import InputField from "components/shared/InputField";
-import { ResetPasswordSchema } from "validation/auth.schema";
+import userStore from "../stores/userStore";
+import toErrorMap from "../utils/toErrorMap";
+import InputField from "../components/shared/InputField";
+import { ResetPasswordSchema } from "../validation/auth.schema";
 
 export default function ResetPassword() {
   async function handleSubmit() {}

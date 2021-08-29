@@ -1,8 +1,8 @@
 import { Button, Flex } from "@chakra-ui/react";
-import Logo from "components/shared/Logo";
-import React from "react";
+import Logo from "../shared/Logo";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import userStore from "stores/userStore";
+import userStore from "../../stores/userStore";
 
 export default function Navbar() {
   const current = userStore((state) => state.current);
@@ -36,7 +36,7 @@ export default function Navbar() {
             </Button>
           </Link>
         ) : (
-          <>
+            <Fragment>
             <Link to="/login">
               <Button
                 color="white"
@@ -64,7 +64,7 @@ export default function Navbar() {
                 Register
               </Button>
             </Link>
-          </>
+            </Fragment>
         )}
       </Flex>
     </Flex>

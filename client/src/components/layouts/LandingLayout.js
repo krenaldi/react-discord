@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
-import Footer from "components/sections/Footer";
-import Navbar from "components/sections/Navbar";
+import Footer from "../../components/sections/Footer";
+import Navbar from "../../components/sections/Navbar";
 import React from "react";
 
 export default function LandingLayout({ children }) {

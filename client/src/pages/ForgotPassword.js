@@ -1,11 +1,11 @@
 import { Box, Button, Flex, Heading, Image, useToast } from "@chakra-ui/react";
-import { forgotPassword } from "api/handler/auth";
+import { forgotPassword } from "../api/handler/auth";
 import { Form, Formik } from "formik";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import toErrorMap from "utils/toErrorMap";
-import InputField from "components/shared/InputField";
-import { ForgotPasswordSchema } from "validation/auth.schema";
+import toErrorMap from "../utils/toErrorMap";
+import InputField from "../components/shared/InputField";
+import { ForgotPasswordSchema } from "../validation/auth.schema";
 
 export default function ForgotPassword() {
   async function handleSubmit() {}

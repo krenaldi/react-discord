@@ -7,14 +7,14 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
-import { login } from "api/handler/auth";
+import { login } from "../api/handler/auth";
 import { Form, Formik } from "formik";
 import React from "react";
 import { Link as RLink, useHistory } from "react-router-dom";
-import userStore from "stores/userStore";
-import toErrorMap from "utils/toErrorMap";
-import InputField from "components/shared/InputField";
-import { LoginSchema } from "validation/auth.schema";
+import userStore from "../stores/userStore";
+import toErrorMap from "../utils/toErrorMap";
+import InputField from "../components/shared/InputField";
+import { LoginSchema } from "../validation/auth.schema";
 
 export default function Login() {
   return (
