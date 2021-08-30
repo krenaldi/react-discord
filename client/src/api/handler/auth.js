@@ -1,6 +1,6 @@
 import { api } from "../apiClient";
 
-export const register = () => null;
+export const register = (payload) => api.post('/account/register', payload);
 
 export const login = () => null;
 
