@@ -1,8 +1,13 @@
 import { api } from "../apiClient";
 
-export const getAccount = () => null;
+export const getAccount = () => api.get('/account');
 
-export const updateAccount = () => null;
+export const updateAccount = (payload) => api.put('/account', payload, {
+  headers: {
+    "Content-Type": "multipart/form-data",
+    
+  }
+});
 
 export const getFriends = () => null;
 
