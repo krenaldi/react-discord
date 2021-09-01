@@ -8,7 +8,7 @@ export const updateAccount = (payload) => api.put('/account', payload, {
   }
 });
 
-export const getFriends = () => null;
+export const getFriends = () => api.get('/account/me/friends');
 
 export const getPendingRequests = () => api.get('/account/me/pending');
 
