@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-// import Account from "./pages/Account";
+import Account from "./pages/Account";
 import AuthRoute from "./pages/AuthRoute";
 import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
@@ -20,6 +20,7 @@ export default function App() {
       <Route path='/forgot-password' component={ForgotPassword} />
       <Route path='/reset-password/:token' component={ResetPassword} />
       <AuthRoute path='/channels/me' component={Home} />
+      <AuthRoute path='/account' component={Account} />
     </Switch>
   );
 }

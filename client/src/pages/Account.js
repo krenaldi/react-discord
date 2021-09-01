@@ -26,6 +26,10 @@ import InputField from "../components/shared/InputField";
 import { UserSchema } from "../validation/auth.schema";
 
 export default function Account() {
+  const { data: user } = useQuery(aKey, () => getAccount().then(res => res.data));
+  const cache = useQueryClient();
+  const logoutUser = userStore(state => state.logout);
+
   const history = useHistory();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -36,17 +40,26 @@ export default function Account() {
   } = useDisclosure();
 
   const inputFile = useRef(null);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(user?.image || "");
   const [cropImage, setCropImage] = useState("");
   const [croppedImage, setCroppedImage] = useState(null);
 
-  async function handleLogout() {}
+  async function handleLogout() {
+    const { data } = await logout();
+    if (data) {
+      cache.clear();
+      logoutUser();
+      history.push("/");
+    }
+  }
 
   async function handleSubmit() {}
 
   function handleSelectImage(event) {}
 
   function applyCrop(file) {}
+
+  if (!user) return null;
 
   return (
     <Flex minHeight="100vh" width="full" align="center" justifyContent="center">
@@ -58,9 +71,9 @@ export default function Account() {
           <Box>
             <Formik
               initialValues={{
-                email: "",
-                username: "",
-                image: null,
+                email: user.email,
+                username: user.username,
+                image: user.image,
               }}
               validationSchema={UserSchema}
               onSubmit={handleSubmit}
@@ -71,8 +84,8 @@ export default function Account() {
                     <Tooltip label="Change Avatar" aria-label="Change Avatar">
                       <Avatar
                         size="xl"
-                        name={""}
-                        src={""}
+                        name={user.username}
+                        src={imageUrl || user.image}
                         _hover={{ cursor: "pointer", opacity: 0.5 }}
                         onClick={() => inputFile.current.click()}
                       />
