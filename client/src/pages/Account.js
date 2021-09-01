@@ -28,7 +28,9 @@ import { UserSchema } from "../validation/auth.schema";
 export default function Account() {
   const { data: user } = useQuery(aKey, () => getAccount().then(res => res.data));
   const cache = useQueryClient();
+
   const logoutUser = userStore(state => state.logout);
+  const setUser = userStore(state => state.setUser);
 
   const history = useHistory();
   const toast = useToast();
@@ -53,7 +55,26 @@ export default function Account() {
     }
   }
 
-  async function handleSubmit() {}
+  async function handleSubmit(values, { setErrors }) {
+    try {
+      const formData = new FormData();
+      formData.append('email', values.email);
+      formData.append('username', values.username);
+      formData.append('image', croppedImage ?? imageUrl);
+      const { data } = await updateAccount(formData);
+      if (data) {
+        setUser(data);
+        toast({
+          title: "Account Updated",
+          status: "success",
+          duration: 3000,
+          isClosable: true
+        });
+      }
+    } catch (error) {
+      setErrors(toErrorMap(error));
+    }
+  }
 
   function handleSelectImage(event) {}
 
