@@ -6,8 +6,8 @@ export const login = (payload) => api.post('/account/login', payload);
 
 export const logout = () => null;
 
-export const forgotPassword = () => null;
+export const forgotPassword = (email) => api.post('/account/forgot-password', { email });
 
 export const changePassword = () => null;
 
-export const resetPassword = () => null;
+export const resetPassword = (payload) => api.post('/account/reset-password', payload);
