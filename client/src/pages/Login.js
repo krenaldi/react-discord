@@ -31,11 +31,11 @@ export default function Login() {
     } catch (error) {
       // handle 401 error for invalid credentials
       console.log(error)
-      if(error.response.status === 401){
+      if(error?.response?.status === 401){
         setErrors({ password: 'Invalid credentials' })
       }
       // handle 404 error for user not found
-      else if (error.response.status === 404) {
+      else if (error?.response?.status === 404) {
         setErrors({ email: 'No user found' })
       } else {
         setErrors(toErrorMap(error));
