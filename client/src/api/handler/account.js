@@ -5,17 +5,16 @@ export const getAccount = () => api.get('/account');
 export const updateAccount = (payload) => api.put('/account', payload, {
   headers: {
     "Content-Type": "multipart/form-data",
-    
   }
 });
 
-export const getFriends = () => null;
+export const getFriends = () => api.get('/account/me/friends');
 
-export const getPendingRequests = () => null;
+export const getPendingRequests = () => api.get('/account/me/pending');
 
-export const sendFriendRequest = () => null;
+export const sendFriendRequest = (id) => api.post(`/account/${id}/friend`);
 
-export const removeFriend = () => null;
+export const removeFriend = (id) => api.delete(`/account/${id}/friend`);
 
 export const acceptFriendRequest = (id) =>
   api.post(`/account/${id}/friend/accept`);
