@@ -10,6 +10,7 @@ import DMSidebar from "../components/layouts/home/DMSidebar";
 
 export default function Home() {
   const { channelId } = useParams();
+  console.log(channelId);
 
   return (
     <AppLayout>
