@@ -1,6 +1,6 @@
 import { api } from "../apiClient";
 
-export const getUserGuilds = () => null;
+export const getUserGuilds = () => api.get('/guilds');
 
 export const createGuild = () => null;
 
