@@ -11,4 +11,4 @@ export const sendMessage = (channelId, data, onUploadProgress) => api.post(`/mes
 
 export const deleteMessage = () => null;
 
-export const editMessage = () => null;
+export const editMessage = (id, text) => api.put(`/messages/${id}`, { text });
