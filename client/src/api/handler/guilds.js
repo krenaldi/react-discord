@@ -2,7 +2,7 @@ import { api } from "../apiClient";
 
 export const getUserGuilds = () => api.get('/guilds');
 
-export const createGuild = () => null;
+export const createGuild = (payload) => api.post(`/guilds/create`, payload);
 
 export const joinGuild = () => null;
 

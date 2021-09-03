@@ -152,13 +152,30 @@ function JoinServerModal({ goBack, submitClose }) {
 }
 
 function CreateServerModal({ goBack, submitClose }) {
-  async function handleCreateServer() {}
+  const current = userStore(state => state.current);
+  const history = useHistory();
+  const cache = useQueryClient();
+
+  async function handleCreateServer(values, { setErrors }) {
+    try {
+      const { data } = await createGuild(values);
+      if (data) {
+        cache.setQueryData(gKey, (guilds) => {
+          return [...guilds, data];
+        });
+        submitClose();
+        history.push(`/channels/${data.id}/${data.default_channel_id}`)
+      }
+    } catch (error) {
+      setErrors(toErrorMap(error));
+    }
+  }
 
   return (
     <ModalContent bg="brandGray.light">
       <Formik
         initialValues={{
-          name: `current user's server`,
+          name: `${current.username}'s server`,
         }}
         validationSchema={GuildSchema}
         onSubmit={handleCreateServer}
