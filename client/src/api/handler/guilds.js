@@ -6,7 +6,7 @@ export const createGuild = (payload) => api.post(`/guilds/create`, payload);
 
 export const joinGuild = () => null;
 
-export const getInviteLink = () => null;
+export const getInviteLink = (id, isPermanent = false) => api.get(`/guilds/${id}/invite${isPermanent ? "?isPermanent=true" : ""}`);
 
 export const invalidateInviteLinks = () => null;
 
