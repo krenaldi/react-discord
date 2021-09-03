@@ -12,17 +12,29 @@ import { IoMdClose } from "react-icons/io";
 import { useQueryClient } from "react-query";
 import { closeDirectMessage } from "api/handler/dm";
 import { dmKey } from "utils/querykeys";
+import ChannelHeader from "../layouts/guild/ChannelHeader";
 
 export default function DMListItem({ dm }) {
   const currentPath = `/channels/me/${dm.id}`;
+  const history = useHistory();
   const location = useLocation();
   const isActive = location.pathname === currentPath;
   const [showCloseButton, setShowButton] = useState(false);
+  const cache = useQueryClient();
 
-  async function handleCloseDM(event) {}
+  async function handleCloseDM(event) {
+    event.preventDefault();
+    await closeDirectMessage(dm.id);
+    cache.setQueryData(dmKey, d => {
+      return d?.filter(channel => channel.id !== dm.id);
+    })
+    if (isActive) {
+      history.replace('/channels/me');
+    }
+  }
 
   return (
-    <Link to={`/channels/me/dm.id`}>
+    <Link to={`/channels/me/${dm.id}`}>
       <ListItem
         p="2"
         mx="2"
@@ -39,13 +51,13 @@ export default function DMListItem({ dm }) {
       >
         <Flex align={"center"} justify={"space-between"}>
           <Flex align="center">
-            <Avatar size="sm" src="">
+            <Avatar size="sm" src={dm.user.image}>
               <AvatarBadge
                 boxSize="1.25em"
                 bg={dm.user.isOnline ? "green.500" : "gray.500"}
               />
             </Avatar>
-            <Text ml="2">dm user username</Text>
+            <Text ml="2">{dm.user.username}</Text>
           </Flex>
           {showCloseButton && <Icon as={IoMdClose} onClick={handleCloseDM} />}
         </Flex>
