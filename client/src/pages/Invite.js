@@ -6,7 +6,31 @@ import { gKey } from "../utils/querykeys";
 import { useQueryClient } from "react-query";
 
 export default function Invite() {
+  const { link } = useParams();
   const [errors, setErrors] = useState(null);
+  const cache = useQueryClient();
+  const history = useHistory();
+
+  useEffect(() => {
+    async function handleJoin() {
+      try {
+        const { data } = await joinGuild({ link });
+        if (data) {
+          cache.invalidateQueries(gKey);
+          history.push(`/channels/${data.id}/${data.default_channel_id}`)
+        }
+      } catch (error) {
+        const status = error?.response?.status;
+        if (status === 400 | status === 404) {
+          setErrors({ link: error?.response?.data?.message })
+        } else {
+          setErrors("An error has occurred. Please try again later.");
+        }
+      }
+    }
+    handleJoin()
+  }, [link, history, cache])
+
 
   return (
     <Flex minHeight="100vh" align="center" justify="center" h="full">
