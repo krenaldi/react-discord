@@ -92,7 +92,29 @@ export default function AddGuildModal({ isOpen, onClose }) {
 }
 
 function JoinServerModal({ goBack, submitClose }) {
-  async function handleJoinServer() {}
+  const cache = useQueryClient();
+  const history = useHistory();
+  async function handleJoinServer(values, { setErrors }) {
+    if (values.link === "") {
+      setErrors({ link: "Enter a valid link" })
+    } else {
+      try {
+        const { data } = await joinGuild(values);
+        if (data) {
+          cache.invalidateQueries(gKey);
+          submitClose();
+          history.push(`/channels/${data.id}/${data.default_channel_id}`)
+        }
+      } catch (error) {
+        const status = error?.response?.status;
+        if (status === 400 | status === 404) {
+          setErrors({ link: error?.response?.data?.message })
+        } else {
+          setErrors(toErrorMap(error));
+        }
+      }
+    }
+  }
 
   return (
     <ModalContent bg="brandGray.light">
@@ -152,13 +174,30 @@ function JoinServerModal({ goBack, submitClose }) {
 }
 
 function CreateServerModal({ goBack, submitClose }) {
-  async function handleCreateServer() {}
+  const current = userStore(state => state.current);
+  const history = useHistory();
+  const cache = useQueryClient();
+
+  async function handleCreateServer(values, { setErrors }) {
+    try {
+      const { data } = await createGuild(values);
+      if (data) {
+        cache.setQueryData(gKey, (guilds) => {
+          return [...guilds, data];
+        });
+        submitClose();
+        history.push(`/channels/${data.id}/${data.default_channel_id}`)
+      }
+    } catch (error) {
+      setErrors(toErrorMap(error));
+    }
+  }
 
   return (
     <ModalContent bg="brandGray.light">
       <Formik
         initialValues={{
-          name: `current user's server`,
+          name: `${current.username}'s server`,
         }}
         validationSchema={GuildSchema}
         onSubmit={handleCreateServer}

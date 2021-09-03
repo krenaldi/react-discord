@@ -1,12 +1,12 @@
 import { api } from "../apiClient";
 
-export const getUserGuilds = () => null;
+export const getUserGuilds = () => api.get('/guilds');
 
-export const createGuild = () => null;
+export const createGuild = (payload) => api.post(`/guilds/create`, payload);
 
-export const joinGuild = () => null;
+export const joinGuild = (payload) => api.post(`/guilds/join`, payload);
 
-export const getInviteLink = () => null;
+export const getInviteLink = (id, isPermanent = false) => api.get(`/guilds/${id}/invite${isPermanent ? "?isPermanent=true" : ""}`);
 
 export const invalidateInviteLinks = () => null;
 

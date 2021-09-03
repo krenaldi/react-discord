@@ -19,9 +19,22 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 export default function InviteModal({ isOpen, onClose }) {
+  const { guildId } = useParams();
   const [inviteLink, setInviteLink] = useState("");
   const { hasCopied, onCopy } = useClipboard(inviteLink);
   const [isPermanent, setPermanent] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      async function fetchLink() {
+        const { data } = await getInviteLink(guildId, isPermanent);
+        if (data) {
+          setInviteLink(data)
+        }
+      }
+      fetchLink()
+    }
+  }, [isOpen, guildId, isPermanent])
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
