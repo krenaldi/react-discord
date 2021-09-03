@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { MdCameraEnhance } from "react-icons/md";
 import { useQueryClient } from "react-query";
 import getSocket from "../getSocket";
 
@@ -23,13 +24,7 @@ export default function useMemberSocket(guildId, key) {
     });
 
     socket.on("toggle_online", (memberId) => {
-      cache.setQueryData(key, (data) => {
-        const index = data?.findIndex((m) => m.id === memberId);
-        if (index !== -1) {
-          data[index].isOnline = true;
-        }
-        return data;
-      });
+      cache.invalidateQueries(key);
     });
 
     socket.on("toggle_offline", (memberId) => {

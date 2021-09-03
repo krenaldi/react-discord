@@ -92,7 +92,29 @@ export default function AddGuildModal({ isOpen, onClose }) {
 }
 
 function JoinServerModal({ goBack, submitClose }) {
-  async function handleJoinServer() {}
+  const cache = useQueryClient();
+  const history = useHistory();
+  async function handleJoinServer(values, { setErrors }) {
+    if (values.link === "") {
+      setErrors({ link: "Enter a valid link" })
+    } else {
+      try {
+        const { data } = await joinGuild(values);
+        if (data) {
+          cache.invalidateQueries(gKey);
+          submitClose();
+          history.push(`/channels/${data.id}/${data.default_channel_id}`)
+        }
+      } catch (error) {
+        const status = error?.response?.status;
+        if (status === 400 | status === 404) {
+          setErrors({ link: error?.response?.data?.message })
+        } else {
+          setErrors(toErrorMap(error));
+        }
+      }
+    }
+  }
 
   return (
     <ModalContent bg="brandGray.light">
