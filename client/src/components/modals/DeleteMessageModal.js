@@ -17,7 +17,10 @@ import React from "react";
 import { getTime } from "utils/dateUtils";
 
 export default function DeleteMessageModal({ message, isOpen, onClose }) {
-  async function handleDeleteMessage() {}
+  async function handleDeleteMessage() {
+    onClose();
+    await deleteMessage(message.id);
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -39,15 +42,15 @@ export default function DeleteMessageModal({ message, isOpen, onClose }) {
             py={2}
           >
             <Flex>
-              <Avatar h="40px" w="40px" ml="4" mt={"1"} src="" />
+              <Avatar h="40px" w="40px" ml="4" mt={"1"} src={message.user.image} />
               <Box ml="3">
                 <Flex alignItems="center">
-                  <Text>message user username</Text>
+                  <Text>{message.user.username}</Text>
                   <Text fontSize="12px" color="brandGray.accent" ml="3">
-                    createdAt
+                    {getTime(message.createdAt)}
                   </Text>
                 </Flex>
-                <Text>text</Text>
+                <Text>{message.text}</Text>
               </Box>
             </Flex>
           </Flex>
