@@ -12,7 +12,11 @@ export const invalidateInviteLinks = () => null;
 
 export const getGuildMembers = () => null;
 
-export const editGuild = () => null;
+export const editGuild = (id, body) => api.put(`/guilds/${id}`, body, {
+  headers: {
+    "Content-Type": "multipart/form-data"
+  }
+});
 
 export const deleteGuild = () => null;
 

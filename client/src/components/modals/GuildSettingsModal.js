@@ -39,6 +39,7 @@ import InputField from "components/shared/InputField";
 import CropImageModal from "./CropImageModal";
 
 export default function GuildSettingsModal({ guildId, isOpen, onClose }) {
+  const guild = useGetCurrentGuild(guildId);
   const [screen, setScreen] = useState("START");
   const [isReset, setIsReset] = useState(false);
 
@@ -59,11 +60,30 @@ export default function GuildSettingsModal({ guildId, isOpen, onClose }) {
   const [cropImage, setCropImage] = useState("");
   const [croppedImage, setCroppedImage] = useState(null);
 
-  async function handleEditGuild() {}
+  async function handleEditGuild(values, { setErrors, resetForm }) {
+    try {
+      const formData = new FormData();
+      formData.append('name', values.name);
+      formData.append('image', croppedImage ?? imageUrl);
+      const { data } = await editGuild(guildId, formData);
+      if (data) {
+        resetForm();
+        onClose();
+      }
+    } catch (error) {
+      setErrors(toErrorMap(error));
+    }
+  }
 
-  function applyCrop(file) {}
+  function applyCrop(file) {
+    setImageUrl(URL.createObjectURL(file));
+    setCroppedImage(new File([file], "icon"));
+    cropperOnClose();
+  }
 
   async function handleInvalidateInvites() {}
+
+  if (!guild) return null;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -72,7 +92,7 @@ export default function GuildSettingsModal({ guildId, isOpen, onClose }) {
         <ModalContent bg="brandGray.light">
           <Formik
             initialValues={{
-              name: "",
+              name: guild.name,
             }}
             validationSchema={GuildSchema}
             onSubmit={handleEditGuild}
@@ -89,7 +109,7 @@ export default function GuildSettingsModal({ guildId, isOpen, onClose }) {
                       <Tooltip label="Change Icon" aria-label="Change Icon">
                         <Avatar
                           size="xl"
-                          name={"guild name"}
+                          name={guild?.name}
                           bg={"brandGray.darker"}
                           color={"#fff"}
                           src={imageUrl || ""}
@@ -207,7 +227,7 @@ export default function GuildSettingsModal({ guildId, isOpen, onClose }) {
         <DeleteGuildModal
           goBack={goBack}
           submitClose={submitClose}
-          name={"guild name"}
+          name={guild.name}
           guildId={guildId}
         />
       )}
