@@ -7,6 +7,10 @@ import { useParams } from "react-router-dom";
 import userStore from "stores/userStore";
 
 export default function MemberListItem({ member }) {
+  const { guildId } = useParams();
+  const current = userStore(state => state.current);
+  const guild = useGetCurrentGuild(guildId);
+  const isOwner = guild !== undefined && guild.ownerId === current?.id;
   const { show } = useContextMenu({
     id: member.id,
   });
@@ -26,17 +30,17 @@ export default function MemberListItem({ member }) {
         onContextMenu={show}
       >
         <Flex align="center">
-          <Avatar size="sm" src="">
+          <Avatar size="sm" src={member.image}>
             <AvatarBadge
               boxSize="1.25em"
-              bg={"isOnline" ? "green.500" : "gray.500"}
+              bg={member.isOnline ? "green.500" : "gray.500"}
             />
           </Avatar>
-          <Text ml="2">username</Text>
+          <Text ml="2">{member.username}</Text>
         </Flex>
       </ListItem>
-      {"is not current user" && (
-        <MemberContextMenu member={member} id={member.id} />
+      {member.id !== current?.id && (
+        <MemberContextMenu member={member} isOwner={isOwner} id={member.id} />
       )}
     </>
   );

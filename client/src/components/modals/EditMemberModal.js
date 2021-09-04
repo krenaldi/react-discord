@@ -24,7 +24,24 @@ import { MemberSchema } from "validation/member.schema";
 import InputField from "components/shared/InputField";
 
 export default function EditMemberModal({ guildId, isOpen, onClose }) {
-  async function handleEditMemberAppearance() {}
+  const current = userStore(state => state.current);
+  const { data } = useQuery(`settings-${guildId}`, () => getGuildMemberSettings(guildId).then(res => res.data));
+
+  async function handleEditMemberAppearance(values, { setErrors, setFieldValues }) {
+    try {
+      if (values.color === "#fff") {
+        setFieldValues('color', null);
+      }
+      const { data } = await changeGuildMemberSettings(guildId, values);
+      if (data) {
+        onClose();
+      }
+    } catch (error) {
+      setErrors(toErrorMap(error));
+    }
+  }
+
+  if (!data) return null;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -32,8 +49,8 @@ export default function EditMemberModal({ guildId, isOpen, onClose }) {
       <ModalContent bg="brandGray.light">
         <Formik
           initialValues={{
-            color: "",
-            nickname: "",
+            color: data.color,
+            nickname: data.nickname,
           }}
           validationSchema={MemberSchema}
           onSubmit={handleEditMemberAppearance}
@@ -49,7 +66,7 @@ export default function EditMemberModal({ guildId, isOpen, onClose }) {
                   color={values.color ?? undefined}
                   label="nickname"
                   name="nickname"
-                  value={values.nickname}
+                  value={values.nickname ?? current?.username}
                 />
                 <Text
                   mt={"2"}

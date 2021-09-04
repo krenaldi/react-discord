@@ -20,9 +20,9 @@ export const editGuild = (id, body) => api.put(`/guilds/${id}`, body, {
 
 export const deleteGuild = (id) => api.delete(`/guilds/${id}/delete`);
 
-export const getGuildMemberSettings = () => null;
+export const getGuildMemberSettings = (id) => api.get(`/guilds/${id}/member`);
 
-export const changeGuildMemberSettings = () => null;
+export const changeGuildMemberSettings = (id, body) => api.put(`/guilds/${id}/member`, body);
 
 export const kickMember = (guildId, memberId) => api.post(`/guilds/${guildId}/kick`, { memberId });
 
