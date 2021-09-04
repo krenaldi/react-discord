@@ -569,7 +569,7 @@
     "webpack" "5.9.0"
     "webpack-node-externals" "2.5.2"
 
-"@nestjs/common@^6.7.0 || ^7.0.0", "@nestjs/common@^6.8.0 || ^7.0.0", "@nestjs/common@^7.0.0", "@nestjs/common@^7.0.8", "@nestjs/common@^7.6.12":
+"@nestjs/common@^6.0.0 || ^7.0.0 || ^8.0.0", "@nestjs/common@^6.7.0 || ^7.0.0", "@nestjs/common@^6.8.0 || ^7.0.0", "@nestjs/common@^7.0.0", "@nestjs/common@^7.0.8", "@nestjs/common@^7.6.12":
   "integrity" "sha512-DXW1BaiDTYuDq3jHkps1DN00atUN7HOB8tzeyVZO1DPmQHjGNMm3qBQ+Du4HnWb+J1YdIUmIkBcGIe61S+uWAA=="
   "resolved" "https://registry.npmjs.org/@nestjs/common/-/common-7.6.12.tgz"
   "version" "7.6.12"
@@ -579,7 +579,7 @@
     "tslib" "2.1.0"
     "uuid" "8.3.2"
 
-"@nestjs/core@^6.7.0 || ^7.0.0", "@nestjs/core@^6.8.0 || ^7.0.0", "@nestjs/core@^7.0.0", "@nestjs/core@^7.6.12":
+"@nestjs/core@^6.0.0 || ^7.0.0 || ^8.0.0", "@nestjs/core@^6.7.0 || ^7.0.0", "@nestjs/core@^6.8.0 || ^7.0.0", "@nestjs/core@^7.0.0", "@nestjs/core@^7.6.12":
   "integrity" "sha512-hxgWjkKyqA0XJsjs3wlXlh/NbOk03NF8uzGxIUM/HIogu0TaC+4BWpNAvmruduPVioIisCJCKWuFKsjm7S0A1A=="
   "resolved" "https://registry.npmjs.org/@nestjs/core/-/core-7.6.12.tgz"
   "version" "7.6.12"
@@ -625,6 +625,13 @@
     "@angular-devkit/schematics" "11.1.0"
     "fs-extra" "9.1.0"
     "pluralize" "8.0.0"
+
+"@nestjs/serve-static@^2.2.2":
+  "integrity" "sha512-3Mr+Q/npS3N7iGoF3Wd6Lj9QcjMGxbNrSqupi5cviM0IKrZ1BHl5qekW95rWYNATAVqoTmjGROAq+nKKpuUagQ=="
+  "resolved" "https://registry.npmjs.org/@nestjs/serve-static/-/serve-static-2.2.2.tgz"
+  "version" "2.2.2"
+  dependencies:
+    "path-to-regexp" "0.1.7"
 
 "@nestjs/swagger@^4.7.12":
   "integrity" "sha512-RSUwcVxrzXF7/b/IZ5lXnYHJ6jIGS9wWRTJKIt1kIaCNWT+0wRfTlAyhQkzs2g35/PTXJEcdIwwY7mBO/bwHzw=="

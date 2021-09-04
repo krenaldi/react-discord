@@ -9,9 +9,15 @@ import { MessageModule } from './message/message.module';
 import { SocketModule } from './socket/socket.module';
 import { Connection } from 'typeorm';
 import { PRODUCTION } from './utils/constants';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, "..", "app"),
+      exclude: ["/api/*", "/ws/*"]
+    }),
     TypeOrmModule.forRootAsync({
       useClass: DatabaseConnectionService,
     }),
