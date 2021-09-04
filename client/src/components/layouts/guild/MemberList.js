@@ -12,9 +12,20 @@ import memberScrollbarCss from "./css/MemberScrollerCSS";
 export default function MemberList() {
   const { guildId } = useParams();
   const key = mKey(guildId);
+  const { data } = useQuery(key, () => getGuildMembers(guildId).then(res => res.data));
 
   const online = [];
   const offline = [];
+
+  if (data) {
+    data.forEach(member => {
+      if (member.isOnline) {
+        online.push(member);
+      } else {
+        offline.push(member);
+      }
+    });
+  }
 
   useMemberSocket(guildId, key);
 
