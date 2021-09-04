@@ -6,13 +6,14 @@ import GuildMenu from "components/menus/GuildMenu";
 import CreateChannelModal from "components/modals/CreateChannelModal";
 import InviteModal from "components/modals/InviteModal";
 import React from "react";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { cKey } from "utils/querykeys";
 import AccountBar from "../AccountBar";
 import channelScrollbarCss from "./css/ChannelScrollerCSS";
 
 export default function Channels() {
+
   const {
     isOpen: inviteIsOpen,
     onOpen: inviteOpen,
@@ -26,6 +27,8 @@ export default function Channels() {
 
   const { guildId } = useParams();
   const key = cKey(guildId);
+
+  const { data } = useQuery(key, () => getChannels(guildId).then(res => res.data));
 
   useChannelSocket(guildId, key);
 
@@ -51,7 +54,9 @@ export default function Channels() {
           />
         )}
         <UnorderedList listStyleType="none" ml="0" mt="4">
-          channels
+          {data?.map(channel => (
+            <ChannelListItem key={channel.id} channel={channel} guildId={guildId} />
+          ))}
           <Box h="16" />
         </UnorderedList>
         <AccountBar />
