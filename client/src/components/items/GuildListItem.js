@@ -18,13 +18,7 @@ export default function GuildListItem({ guild }) {
 
   useEffect(() => {
     if (guild.hasNotification && isActive) {
-      cache.setQueryData(gKey, (d) => {
-        const index = d?.findIndex((c) => c.id === guild.id);
-        if (index !== -1) {
-          d[index] = { ...d[index], hasNotification: false };
-        }
-        return d;
-      });
+      cache.invalidateQueries(gKey)
     }
   });
 
