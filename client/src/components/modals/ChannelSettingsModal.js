@@ -55,7 +55,19 @@ export default function ChannelSettingsModal({
     onClose();
   };
 
-  async function handleEditChannel() {}
+  async function handleEditChannel(values, { setErrors, resetForm }) {
+    try {
+      const ids = [];
+      selectedItems.map(item => ids.push(item.value));
+      const { data } = await editChannel(guildId, channelId, { ...values, members: ids });
+      if (data) {
+        resetForm();
+        onClose();
+      }
+    } catch (error) {
+      setErrors(toErrorMap(error));
+    }
+  }
 
   // eslint-disable-next-line
   const { data: current } = useQuery(`${channelId}-members`, async () => {
