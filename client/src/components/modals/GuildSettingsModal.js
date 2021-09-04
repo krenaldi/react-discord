@@ -81,7 +81,12 @@ export default function GuildSettingsModal({ guildId, isOpen, onClose }) {
     cropperOnClose();
   }
 
-  async function handleInvalidateInvites() {}
+  async function handleInvalidateInvites() {
+    const { data } = await invalidateInviteLinks(guild.id);
+    if (data) {
+      setIsReset(true);
+    }
+  }
 
   if (!guild) return null;
 
