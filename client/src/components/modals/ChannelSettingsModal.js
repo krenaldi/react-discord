@@ -42,6 +42,7 @@ export default function ChannelSettingsModal({
   onClose,
 }) {
   const key = mKey(guildId);
+  const { data } = useQuery(key, () => getGuildMembers(guildId).then(res => res.data));
 
   const channel = useGetCurrentChannel(channelId, cKey(guildId));
 
@@ -68,6 +69,8 @@ export default function ChannelSettingsModal({
       setErrors(toErrorMap(error));
     }
   }
+
+  data?.map(member => members.push({ label: member.username, value: member.id, image: member.image }));
 
   // eslint-disable-next-line
   const { data: current } = useQuery(`${channelId}-members`, async () => {
@@ -215,7 +218,10 @@ export default function ChannelSettingsModal({
 }
 
 function DeleteChannelModal({ goBack, submitClose, name, channelId, guildId }) {
-  async function handleDeleteChannel() {}
+  async function handleDeleteChannel() {
+    submitClose();
+    await deleteChannel(guildId, channelId);
+  }
 
   return (
     <ModalContent bg="brandGray.light">
