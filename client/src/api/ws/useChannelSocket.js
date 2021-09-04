@@ -20,9 +20,7 @@ export default function useChannelSocket(guildId, key) {
     };
 
     socket.on("add_channel", (newChannel) => {
-      cache.setQueryData(key, (data) => {
-        return [...data, newChannel];
-      });
+      cache.invalidateQueries(key);
     });
 
     socket.on("edit_channel", (editedChannel) => {

@@ -30,7 +30,18 @@ import InputField from "components/shared/InputField";
 export default function CreateChannelModal({ guildId, isOpen, onClose }) {
   const key = mKey(guildId);
 
-  async function handleCreateChannel() {}
+  async function handleCreateChannel(values, { setErrors, resetForm }) {
+    try {
+      const ids = [];
+      const { data } = await createChannel(guildId, { ...values, members: ids });
+      if (data) {
+        resetForm();
+        onClose();
+      }
+    } catch (error) {
+      setErrors(toErrorMap(error));
+    }
+  }
 
   const members = [];
   const [selectedItems, setSelectedItems] = useState([]);
